@@ -2,14 +2,25 @@ import './App.css'
 import ListEmployeeComponent from "./components/ListEmployeeComponent.jsx";
 import HeaderComponent from "./components/HeaderComponent.jsx";
 import FooterComponent from "./components/FooterComponent.jsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import EmployeeComponent from "./components/EmployeeComponent.jsx";
 
 function App() {
 
   return (
     <>
-        <HeaderComponent/>
-        <ListEmployeeComponent/>
-        <FooterComponent/>
+      <BrowserRouter>
+          <HeaderComponent/>
+          <Routes>
+              {/*//http://localhost:3000*/}
+              <Route path='/' element={<ListEmployeeComponent/>}></Route>
+              {/*//http://localhost:3000/employees*/}
+                <Route path='/employee' element={<ListEmployeeComponent/>}></Route>
+                {/*//http://localhost:3000/employees/saveEmployee*/}
+                <Route path='/employee/saveEmployee' element={<EmployeeComponent/>}></Route>
+          </Routes>
+          <FooterComponent/>
+      </BrowserRouter>
     </>
   )
 }
