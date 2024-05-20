@@ -20,6 +20,10 @@ const ListEmployeeComponent = () => {
         navigator('/employee/saveEmployee');
     }
 
+    function updateEmployee(phone) {
+        navigator(`/employee/updateEmployee/${phone}`);
+    }
+
     return (
         <div className='container'>
             <h2 className="text-center">List of Employees</h2>
@@ -33,6 +37,7 @@ const ListEmployeeComponent = () => {
                             <th>Employee Password</th>
                             <th>Employee Role</th>
                             <th>Employee Pets</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -45,6 +50,10 @@ const ListEmployeeComponent = () => {
                                     <td>{employee.password}</td>
                                     <td>{employee.role}</td>
                                     <td>{employee.pets.map(x => x.phone).join(', ')}</td>
+                                    <td>
+                                        <button className="btn btn-info" onClick={() => updateEmployee(employee.phone)}>Update</button>
+                                        {/*<button className="btn btn-danger">Delete</button>*/}
+                                    </td>
                                 </tr>
                             )
                         }

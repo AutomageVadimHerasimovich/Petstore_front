@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {createEmployee} from "../services/EmployeeService.js";
-import {useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {createEmployee, updateEmployee} from "../services/EmployeeService.js";
+import {useNavigate, useParams} from "react-router-dom";
 
 const EmployeeComponent = () => {
 
@@ -9,6 +9,8 @@ const EmployeeComponent = () => {
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
 
+    const [errorMessage, setErrorMessage] = useState(null);
+    const { phone: phoneParam } = useParams();
     const [errors, setErrors] = useState({
         firstName: '',
         phone: '',
@@ -29,6 +31,28 @@ const EmployeeComponent = () => {
                 console.log(response.data);
                 navigator('/employee');
             })
+        }
+    }
+
+    function redactEmployee(event) {
+        event.preventDefault();
+
+        if (validateForm()) {
+            const employee = {firstName, phone, password, role}
+            console.log(employee)
+
+            updateEmployee(employee).then((response) => {
+            console.log(response.data);
+            navigator('/employee');
+        }).catch((error) => {
+        if (error.response && error.response.status === 500) {
+            console.error('Employee not found');
+            setErrorMessage('Employee not found by Phone');
+        } else {
+            console.error(error);
+            setErrorMessage('Error updating employee');
+        }
+        })
         }
     }
 
@@ -70,14 +94,58 @@ const EmployeeComponent = () => {
         return valid;
     }
 
+    function pageTitle() {
+        if (phoneParam) {
+            return <h2 className="text-center">Update Employee</h2>
+        } else {
+            return <h2 className="text-center">Add Employee</h2>
+        }
+    }
+
+    function pageButton() {
+        if (phoneParam) {
+            return <button className='btn btn-info' onClick={redactEmployee}>Update</button>
+        } else {
+            return <button className='btn btn-success' onClick={saveEmployee}>Submit</button>
+        }
+    }
+
+    function pageIfPhone() {
+        if (!phoneParam) {
+            return (
+                <div className='form-group mb-2'>
+                    <label className='form-label'>Phone:</label>
+                    <input
+                        type='text'
+                        placeholder='Enter Employee Phone'
+                        name='phone'
+                        value={phone}
+                        className={'form-control' + (errors.phone ? ' is-invalid' : '')}
+                        onChange={(event) => setPhone(event.target.value)}>
+                    </input>
+                    {errors.phone && <div className='invalid-feedback'> { errors.phone} </div>}
+                </div>
+            ) } else {
+            useEffect(() => {
+                setPhone(phoneParam);
+            })
+            return <div></div>
+        }
+    }
+
     return (
         <div className='container'>
             <br /> <br />
             <div className='row'>
                 <div className='card col-md-6 offset-md-3 offset-md-3'>
-                    <h2 className="text-center">Add Employee</h2>
+                    {
+                        pageTitle()
+                    }
                     <div className='card-body'>
                         <form>
+                            {
+                                errorMessage && <div className='alert alert-danger'>{errorMessage}</div>
+                            }
                             <div className='form-group mb-2'>
                                 <label className='form-label'>First Name:</label>
                                 <input
@@ -90,20 +158,9 @@ const EmployeeComponent = () => {
                                 </input>
                                 {errors.firstName && <div className='invalid-feedback'> { errors.firstName} </div>}
                             </div>
-
-                            <div className='form-group mb-2'>
-                                <label className='form-label'>Phone:</label>
-                                <input
-                                    type='text'
-                                    placeholder='Enter Employee Phone'
-                                    name='phone'
-                                    value={phone}
-                                    className={'form-control' + (errors.phone ? ' is-invalid' : '')}
-                                    onChange={(event) => setPhone(event.target.value)}>
-                                </input>
-                                {errors.phone && <div className='invalid-feedback'> { errors.phone} </div>}
-                            </div>
-
+                            {
+                            pageIfPhone()
+                            }
                             <div className='form-group mb-2'>
                                 <label className='form-label'>Password:</label>
                                 <input
@@ -129,8 +186,10 @@ const EmployeeComponent = () => {
                                 </input>
                                 {errors.role && <div className='invalid-feedback'> { errors.role} </div>}
                             </div>
-
-                            <button className='btn btn-success' onClick={saveEmployee}>Submit</button>
+                                {
+                                    pageButton()
+                                }
+                            {/*<button className='btn btn-success' onClick={saveEmployee}>Submit</button>*/}
                         </form>
                     </div>
                 </div>
