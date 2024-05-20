@@ -1,73 +1,18 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {listEmployees} from "../services/EmployeeService.js";
 
 const ListEmployeeComponent = () => {
-    const dummyData = [
-        {
-            id: 1,
-            firstName: 'John',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 2,
-            firstName: 'Jane',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 3,
-            firstName: 'John',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 4,
-            firstName: 'Jane',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 5,
-            firstName: 'John',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 6,
-            firstName: 'Jane',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 7,
-            firstName: 'John',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
-        },
-        {
-            id: 8,
-            firstName: 'Jane',
-            phone: 'Doe',
-            password: "123456789",
-            role: "user",
-            pets: "xyita"
 
-        }
-    ]
+    const [employees, setEmployees] = useState([])
+
+    useEffect(() => {
+        listEmployees().then((response) => {
+            setEmployees(response.data)
+        }).catch((error) => {
+            console.error(error);
+        })
+    }, [])
+
     return (
         <div className='container'>
             <h2 className="text-center">List of Employees</h2>
@@ -79,19 +24,17 @@ const ListEmployeeComponent = () => {
                             <th>Employee Phone</th>
                             <th>Employee Password</th>
                             <th>Employee Role</th>
-                            <th>Employee Pets</th>
                         </tr>
                     </thead>
                 <tbody>
                         {
-                            dummyData.map(employee =>
+                            employees.map(employee =>
                                 <tr key={employee.id}>
                                     <td>{employee.id}</td>
                                     <td>{employee.firstName}</td>
                                     <td>{employee.phone}</td>
                                     <td>{employee.password}</td>
                                     <td>{employee.role}</td>
-                                    <td>{employee.pets}</td>
                                 </tr>
                             )
                         }
