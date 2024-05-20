@@ -32,6 +32,7 @@ const ListEmployeeComponent = () => {
                             <th>Employee Phone</th>
                             <th>Employee Password</th>
                             <th>Employee Role</th>
+                            <th>Employee Pets</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -43,6 +44,7 @@ const ListEmployeeComponent = () => {
                                     <td>{employee.phone}</td>
                                     <td>{employee.password}</td>
                                     <td>{employee.role}</td>
+                                    <td>{employee.pets.map(x => x.phone).join(', ')}</td>
                                 </tr>
                             )
                         }
