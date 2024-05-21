@@ -91,7 +91,7 @@ const PetComponent = () => {
             valid = false;
         }
 
-        if (age.trim()){
+        if (age){
             errorsCopy.age = '';
         } else {
             errorsCopy.age = 'Age is required';
@@ -172,7 +172,20 @@ const PetComponent = () => {
                                     className={'form-control' + (errors.name ? ' is-invalid' : '')}
                                     onChange={(event) => setName(event.target.value)}>
                                 </input>
-                                {errors.firstName && <div className='invalid-feedback'> { errors.firstName} </div>}
+                                {errors.name && <div className='invalid-feedback'> { errors.name} </div>}
+                            </div>
+
+                            <div className='form-group mb-2'>
+                                <label className='form-label'>Url:</label>
+                                <input
+                                    type='text'
+                                    placeholder='Enter Pet Url'
+                                    name='url'
+                                    value={url}
+                                    className={'form-control' + (errors.url ? ' is-invalid' : '')}
+                                    onChange={(event) => setUrl(event.target.value)}>
+                                </input>
+                                {errors.url && <div className='invalid-feedback'> { errors.url} </div>}
                             </div>
                             {
                             pageIfPhone()
