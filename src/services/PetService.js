@@ -14,3 +14,6 @@ export const updatePet = (Pet) => axios.put(REST_API_UPDATE_URL, Pet)
 export const getPet = (PetPhone) => axios.get(REST_API_BASE_URL + '/' + PetPhone)
 
 export const deletePet = (PetPhone) => axios.delete(REST_API_DELETE_URL + '/' + PetPhone)
+
+export const connectPetToEmployee = (PetPhone, EmployeePhone) =>
+    axios.patch(REST_API_BASE_URL + '/connectPetToEmployee/' + PetPhone + '/employee/' + EmployeePhone)

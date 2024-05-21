@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {deletePet, listPets} from "../services/PetService.js";
+import { deletePet, listPets} from "../services/PetService.js";
 import {useNavigate} from "react-router-dom";
 
 const ListPetComponent = () => {
@@ -39,9 +39,13 @@ const ListPetComponent = () => {
         })
     }
 
+    function connectionPetToEmployee(phone) {
+        navigator(`/petstore/connectPetToEmployee/${phone}`);
+    }
+
     return (
         <div className='container'>
-            <h2 className="text-center">List of Pets</h2>
+            <h2 className="text-center basic-component-container basic-component-text-box">List of Pets</h2>
             <button className="btn btn-primary mb-2" onClick={addNewPet}>Add Pet</button>
             <table className='table table-striped table-bordered'>
                     <thead>
@@ -52,7 +56,7 @@ const ListPetComponent = () => {
                             <th>Pet Url</th>
                             <th>Pet Age</th>
                             <th>Pet Status</th>
-                            <th>Actions</th>
+                            <th className="actions-column">Actions</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -70,6 +74,9 @@ const ListPetComponent = () => {
                                         <button className="btn btn-danger" onClick={() => removePet(pet.phone)}
                                                 style={{marginLeft: "10px"}}
                                         >Delete</button>
+                                        <button className="btn btn-success" onClick={() => connectionPetToEmployee(pet.phone)}
+                                                style={{marginLeft: "10px"}}
+                                        >Connect</button>
 
                                     </td>
                                 </tr>

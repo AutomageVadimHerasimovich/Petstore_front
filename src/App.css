@@ -11,7 +11,7 @@
 .basic-component-text-box {
     border: 3px solid black;
     padding: 10px;
-    background-color: wheat;
+    background-color: lightblue;
     margin: 10px auto;
     border-radius: 20px;
     width: auto;
@@ -24,4 +24,41 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+body {
+    background-image: url('https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2655.jpg?w=2000&t=st=1716259851~exp=1716260451~hmac=fef577cd4a9335217e2da1213d7263ec38b4b14cde29cce76ef119331f8b6b92');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Стили для таблицы */
+.table {
+    width: 100%; /* Ширина таблицы */
+    border-collapse: collapse; /* Убираем двойные границы */
+    border-radius: 20px; /* Скругление краев таблицы */
+    overflow: hidden; /* Обрезка содержимого, выходящего за границы таблицы */
+}
+
+/* Стили для заголовка таблицы */
+.table th {
+    background-color: lightblue; /* Цвет фона */
+    color: #333; /* Цвет текста */
+    padding: 10px; /* Отступы вокруг текста */
+    border: 1px solid #ddd; /* Граница вокруг ячеек */
+}
+
+/* Стили для ячеек таблицы */
+.table td {
+    padding: 10px; /* Отступы вокруг текста */
+    border: 2px solid #ddd; /* Граница вокруг ячеек */
+}
+
+/* Стили для строк таблицы при наведении */
+.table tr:hover {
+    background-color: #f5f5f5; /* Цвет фона */
+}
+
+.actions-column {
+    width: 300px; /* Замените это значение на желаемую ширину */
 }

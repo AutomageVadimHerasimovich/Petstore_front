@@ -218,7 +218,6 @@ const PetComponent = () => {
                                 {
                                     pageButton()
                                 }
-                            {/*<button className='btn btn-success' onClick={saveEmployee}>Submit</button>*/}
                         </form>
                     </div>
                 </div>

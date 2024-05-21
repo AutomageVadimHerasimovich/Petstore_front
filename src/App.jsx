@@ -7,6 +7,7 @@ import EmployeeComponent from "./components/EmployeeComponent.jsx";
 import BasicComponent from "./components/BasicComponent.jsx";
 import ListPetComponent from "./components/ListPetComponent.jsx";
 import PetComponent from "./components/PetComponent.jsx";
+import ConnectPetToEmployeeComponent from "./components/ConnectPetToEmployeeComponent.jsx";
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
                 <Route path='/employee/updateEmployee/:phone' element={<EmployeeComponent/>}></Route>
                 {/*//http://localhost:3000/employees/updatePet/1*/}
                 <Route path='/petstore/updatePet/:phone' element={<PetComponent/>}></Route>
+                {/*//http://localhost:3000/petstore/connectPetToEmployee/1*/}
+                <Route path='/petstore/connectPetToEmployee/:phone' element={<ConnectPetToEmployeeComponent/>}></Route>
           </Routes>
           <FooterComponent/>
       </BrowserRouter>
