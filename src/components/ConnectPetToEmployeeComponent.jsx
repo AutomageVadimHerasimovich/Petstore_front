@@ -1,50 +1,27 @@
-import React, {useEffect, useState} from "react";
-import {connectPetToEmployee, getPet} from "../services/PetService.js";
+import React, { useState} from "react";
+import {connectPetToEmployee} from "../services/PetService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const ConnectPetToEmployeeComponent = () => {
 
-    const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [status, setStatus] = useState('')
-    const [age, setAge] = useState('')
-    const [url, setUrl] = useState('')
 
     const [errorMessage, setErrorMessage] = useState(null);
     const { phone: phoneParam } = useParams();
     const [errors, setErrors] = useState({
-        name: '',
-        phone: '',
-        status: '',
-        age: '',
-        url: ''
+        phone: ''
     })
 
     const navigator = useNavigate();
 
-    useEffect(() => {
-        if (phoneParam) {
-            getPet(phoneParam).then((response) => {
-                setName(response.data.name);
-                setPhone(response.data.phone);
-                setStatus(response.data.status);
-                setAge(response.data.age);
-                setUrl(response.data.url);
-            }).catch((error) => {
-                console.error(error);
-            })
-        }
-    }, [phoneParam])
-
-    function redactPet(event) {
+    function connectPet(event) {
         event.preventDefault();
 
         if (validateForm()) {
-            const pet = {name, phone, status, age, url}
+            const pet = {phone}
             console.log(pet)
 
             connectPetToEmployee(phoneParam, phone).then((response) => {
-            // updatePet(pet).then((response) => {
                 console.log(response.data);
                 navigator('/petstore');
             }).catch((error) => {
@@ -64,31 +41,10 @@ const ConnectPetToEmployeeComponent = () => {
 
         const errorsCopy = {... errors}
 
-        if (name.trim()){
-            errorsCopy.name = '';
-        } else {
-            errorsCopy.name = 'Name is required';
-            valid = false;
-        }
-
         if (phone.trim()){
             errorsCopy.phone = '';
         } else {
             errorsCopy.phone = 'Phone is required';
-            valid = false;
-        }
-
-        if (age){
-            errorsCopy.age = '';
-        } else {
-            errorsCopy.age = 'Age is required';
-            valid = false;
-        }
-
-        if (status.trim()) {
-            errorsCopy.status = '';
-        } else {
-            errorsCopy.status = 'Status is required';
             valid = false;
         }
 
@@ -102,16 +58,16 @@ const ConnectPetToEmployeeComponent = () => {
     }
 
     function pageButton() {
-            return <button className='btn btn-outline-success' onClick={redactPet}>Connect</button>
+            return <button className='btn btn-outline-success' onClick={connectPet}>Connect</button>
     }
 
-    function pageIfPhone() {
+    function pagePhone() {
             return (
                 <div className='form-group mb-2'>
-                    <label className='form-label'>Phone:</label>
+                    <label className='form-label'>Employee Phone to connect:</label>
                     <input
                         type='text'
-                        placeholder='Enter Pet Phone'
+                        placeholder='Enter Employee Phone to connect'
                         name='phone'
                         value={phone}
                         className={'form-control' + (errors.phone ? ' is-invalid' : '')}
@@ -136,7 +92,7 @@ const ConnectPetToEmployeeComponent = () => {
                                 errorMessage && <div className='alert alert-danger'>{errorMessage}</div>
                             }
                             {
-                                pageIfPhone()
+                                pagePhone()
                             }
                             {
                                 pageButton()
