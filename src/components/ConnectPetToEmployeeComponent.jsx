@@ -58,8 +58,11 @@ const ConnectPetToEmployeeComponent = () => {
     }
 
     function pageButton() {
-            return <button className='btn btn-outline-success' onClick={connectPet}>Connect</button>
-    }
+            return <div className="button-container">
+                <button className='btn btn-outline-success' onClick={connectPet}>Connect</button>
+                <button className='btn btn-danger button-right' onClick={() => navigator('/petstore')}>Cancel</button>
+            </div>
+            }
 
     function pagePhone() {
             return (

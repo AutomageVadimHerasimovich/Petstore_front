@@ -62,3 +62,12 @@ body {
 .actions-column {
     width: 300px; /* Замените это значение на желаемую ширину */
 }
+
+.button-right {
+    margin-left: auto;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}

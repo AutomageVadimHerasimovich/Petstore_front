@@ -120,30 +120,40 @@ const PetComponent = () => {
 
     function pageButton() {
         if (phoneParam) {
-            return <button className='btn btn-info' onClick={redactPet}>Update</button>
-        } else {
-            return <button className='btn btn-success' onClick={savePet}>Submit</button>
+            return <div className="button-container">
+                <button className='btn btn-info' onClick={redactPet}>Update</button>
+                <button className='btn btn-danger button-right' onClick={() => navigator('/petstore')}>Cancel</button>
+            </div>
+                } else {
+            return <div className="button-container">
+                <button className='btn btn-success' onClick={savePet}>Submit</button>
+                <button className='btn btn-danger button-right' onClick={() => navigator('/petstore')}>Cancel</button>
+            </div>
         }
     }
 
-    function pageIfPhone() {
-        if (!phoneParam) {
-            return (
+                function pageIfPhone() {
+                if (!phoneParam) {
+                return (
                 <div className='form-group mb-2'>
-                    <label className='form-label'>Phone:</label>
-                    <input
-                        type='text'
-                        placeholder='Enter Pet Phone'
-                        name='phone'
-                        value={phone}
-                        className={'form-control' + (errors.phone ? ' is-invalid' : '')}
-                        onChange={(event) => setPhone(event.target.value)}>
-                    </input>
-                    {errors.phone && <div className='invalid-feedback'> { errors.phone} </div>}
-                </div>
-            ) } else {
-            useEffect(() => {
-                setPhone(phoneParam);
+                <label className='form-label'>Phone:</label>
+                <input
+                type='text'
+                placeholder='Enter Pet Phone'
+                name='phone'
+                value={phone}
+                className={'form-control' + (errors.phone ? ' is-invalid' : '')}
+                onChange={(event) => setPhone(event.target.value)}>
+            </input>
+        {
+            errors.phone && <div className='invalid-feedback'> {errors.phone} </div>
+        }
+        </div>
+        )
+        } else
+            {
+                useEffect(() => {
+                    setPhone(phoneParam);
             })
             return <div></div>
         }

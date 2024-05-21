@@ -117,30 +117,41 @@ const EmployeeComponent = () => {
 
     function pageButton() {
         if (phoneParam) {
-            return <button className='btn btn-info' onClick={redactEmployee}>Update</button>
-        } else {
-            return <button className='btn btn-success' onClick={saveEmployee}>Submit</button>
+            return <div className="button-container">
+                <button className='btn btn-info' onClick={redactEmployee}>Update</button>
+                <button className='btn btn-danger button-right' onClick={() => navigator('/employee')}>Cancel</button>
+            </div>
+                } else {
+            return <div className="button-container">
+                <button className='btn btn-success' onClick={saveEmployee}>Submit</button>
+                <button className='btn btn-danger button-right' onClick={() => navigator('/employee')}>Cancel</button>
+            </div>
+
         }
     }
 
-    function pageIfPhone() {
-        if (!phoneParam) {
-            return (
+                function pageIfPhone() {
+                if (!phoneParam) {
+                return (
                 <div className='form-group mb-2'>
-                    <label className='form-label'>Phone:</label>
-                    <input
-                        type='text'
-                        placeholder='Enter Employee Phone'
-                        name='phone'
-                        value={phone}
+                <label className='form-label'>Phone:</label>
+                <input
+                type='text'
+                placeholder='Enter Employee Phone'
+                name='phone'
+                value={phone}
                         className={'form-control' + (errors.phone ? ' is-invalid' : '')}
                         onChange={(event) => setPhone(event.target.value)}>
-                    </input>
-                    {errors.phone && <div className='invalid-feedback'> { errors.phone} </div>}
-                </div>
-            ) } else {
-            useEffect(() => {
-                setPhone(phoneParam);
+            </input>
+        {
+            errors.phone && <div className='invalid-feedback'> {errors.phone} </div>
+        }
+        </div>
+        )
+        } else
+            {
+                useEffect(() => {
+                    setPhone(phoneParam);
             })
             return <div></div>
         }
@@ -199,10 +210,9 @@ const EmployeeComponent = () => {
                                 </input>
                                 {errors.role && <div className='invalid-feedback'> { errors.role} </div>}
                             </div>
-                                {
-                                    pageButton()
-                                }
-                            {/*<button className='btn btn-success' onClick={saveEmployee}>Submit</button>*/}
+                            {
+                                pageButton()
+                            }
                         </form>
                     </div>
                 </div>
