@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {listEmployees} from "../services/EmployeeService.js";
+import {deleteEmployee, listEmployees} from "../services/EmployeeService.js";
 import {useNavigate} from "react-router-dom";
 
 const ListEmployeeComponent = () => {
@@ -9,12 +9,16 @@ const ListEmployeeComponent = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
+        getAllEmployees();
+    }, [])
+
+    function getAllEmployees() {
         listEmployees().then((response) => {
             setEmployees(response.data)
         }).catch((error) => {
             console.error(error);
         })
-    }, [])
+    }
 
     function addNewEmployee() {
         navigator('/employee/saveEmployee');
@@ -22,6 +26,17 @@ const ListEmployeeComponent = () => {
 
     function updateEmployee(phone) {
         navigator(`/employee/updateEmployee/${phone}`);
+    }
+
+    function removeEmployee(phone) {
+        console.log("Employee deleted with Phone: " + phone);
+
+        deleteEmployee(phone).then(() => {
+            getAllEmployees();
+            navigator('/employee');
+        }).catch((error) => {
+            console.error(error);
+        })
     }
 
     return (
@@ -52,7 +67,10 @@ const ListEmployeeComponent = () => {
                                     <td>{employee.pets.map(x => x.phone).join(', ')}</td>
                                     <td>
                                         <button className="btn btn-info" onClick={() => updateEmployee(employee.phone)}>Update</button>
-                                        {/*<button className="btn btn-danger">Delete</button>*/}
+                                        <button className="btn btn-danger" onClick={() => removeEmployee(employee.phone)}
+                                                style={{marginLeft: "10px"}}
+                                        >Delete</button>
+
                                     </td>
                                 </tr>
                             )
