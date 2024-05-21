@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {createEmployee, updateEmployee} from "../services/EmployeeService.js";
+import {createEmployee, getEmployee, updateEmployee} from "../services/EmployeeService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const EmployeeComponent = () => {
@@ -19,6 +19,19 @@ const EmployeeComponent = () => {
     })
 
     const navigator = useNavigate();
+
+    useEffect(() => {
+        if (phoneParam) {
+            getEmployee(phoneParam).then((response) => {
+                setFirstName(response.data.firstName);
+                setPhone(response.data.phone);
+                setPassword(response.data.password);
+                setRole(response.data.role);
+            }).catch((error) => {
+                console.error(error);
+            })
+        }
+    }, [phoneParam])
 
     function saveEmployee(event) {
         event.preventDefault();
